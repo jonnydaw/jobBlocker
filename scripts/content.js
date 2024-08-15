@@ -1,39 +1,43 @@
-  
-const currentUrl = window.location.href;
 
 const getUserSettings = async () => {
   let res;
    await chrome.storage.sync.get().then((result) => {
-      //alert("Value is " + JSON.stringify(result));
       res = result;
   });
   return res;
 }
 
-const test = async () => {
-  console.log(JSON.stringify(await getUserSettings()));
-}
+let userSettings = getUserSettings();
+let currentUrl = window.location.href;
 
-displayUserSettings();
+const interval =  setInterval(async () =>{
+  if (!chrome.runtime?.id) {
+    clearInterval(interval);
+    return;
+  }
+  if(currentUrl !== window.location.href || userSettings !== await getUserSettings()){
 
-const blockReedJobs = ()  =>{
+    currentUrl = window.location.href;
+    userSettings = await getUserSettings();
+
+    if (userSettings["reed.co.uk"] && currentUrl.includes("reed.co.uk")){
+      blockReedJobs(userSettings["reed.co.uk"])
+    }
+  }
+}, 750);
+
+
+const blockReedJobs = (recruiters)  =>{
   const jobCards  = document.querySelectorAll("[data-element='recruiter']")
-      jobCards.forEach((j) =>{
-        if(j.textContent === "Sparta Global" || j.textContent === "ITonlinelearning Recruitment"){
-          const parent = j.closest("article");
+      jobCards.forEach((job) =>{
+        // if(job.textContent === "Sparta Global"){
+        if(recruiters.includes(job.textContent)){
+          const parent = job.closest("article");
           parent.style.display = 'none';
-        } else{
-            console.log(j)
         }
       })
       
     console.log("hit");
   }
 
-if (currentUrl.includes("reed.co.uk")) {
-  blockReedJobs();
-  
-} else{
-  console.log("not hit")
-}
 

@@ -1,48 +1,51 @@
+*{
+  font-family: "EB Garamond", serif !important;
+}
+
 body {
     width: 25rem;
     height: 25rem;
-    background-color: black;
-    color: beige;
+    background-color: #faf3ea;
+    color: #023020;
   }
 
 input[type=text] {
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    padding: 0.75em 1.25em;
+    margin: 0.5em 0;
     display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 0.25em;
     box-sizing: border-box;
   }
     
   #blockButton{
     display: block;
-    margin: 0 auto;
-    padding: 12px 20px;
-    background-color: red;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    margin: 0.75em auto;
+    padding: 0.75em 1.25em;
+    background-color: #FF6961;
+    border-radius: 0.75em;
     box-sizing: border-box;
+    text-transform: uppercase;
+    cursor:pointer;
   }
 
-  h1{
+  h1, h2{
     text-align: center;
+    text-transform: uppercase;
   }
   ul {
     list-style-type: none;
     padding-inline-start: 0;
     margin: 1rem 0;
+    overflow-y: scroll;
+    max-height: 12em;
   }
   
   li {
     padding: 0.25rem;
+    font-size:medium;
   }
-  li:nth-child(odd) {
-    background: #80808030;
-  }
-  li:nth-child(even) {
-    background: #ffffff;
-  }
+ 
   
   h3,
   p {

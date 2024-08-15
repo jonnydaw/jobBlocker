@@ -1,4 +1,5 @@
 
+// to-do remove from blocked list
 
 const blocked = {};
 const blockForm =  document.querySelector("#blockForm");

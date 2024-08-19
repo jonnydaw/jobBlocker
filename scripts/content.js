@@ -24,20 +24,20 @@ const interval =  setInterval(async () =>{
       blockReedJobs(userSettings["reed.co.uk"])
     }
   }
-}, 750);
+}, 1500);
 
 
 const blockReedJobs = (recruiters)  =>{
   const jobCards  = document.querySelectorAll("[data-element='recruiter']")
       jobCards.forEach((job) =>{
-        // if(job.textContent === "Sparta Global"){
+        let parent = job.closest("article");
         if(recruiters.includes(job.textContent)){
-          const parent = job.closest("article");
-          parent.style.display = 'none';
+          parent.style.display = 'none'; 
+        } else if(parent?.style.display == "none"){
+          parent.style.display = "block"
         }
       })
       
-    console.log("hit");
   }
 
 

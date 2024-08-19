@@ -3,6 +3,7 @@
 
 const blocked = {};
 const blockForm =  document.querySelector("#blockForm");
+const validWebsites = ["reed.co.uk"]
 
 // chrome.storage.local.clear(function() {
 //     var error = chrome.runtime.lastError;
@@ -24,14 +25,34 @@ document.addEventListener("DOMContentLoaded", async  () => {
 
 blockForm.addEventListener("submit", (event) => {
     event.preventDefault();
-    blocked[event.target.website.value] = event.target.recruiter.value; 
-    updateUserSettings(blocked);
+    if(blockForm.website.value === "" || 
+        blockForm.recruiter.value === "" ||
+        !validWebsites.includes(blockForm.website.value)){
+            alert("Invalid Input");
+        return;
+    }
+    blocked[blockForm.website.value] = blockForm.recruiter.value; 
+    updateUserSettingsAddition(blocked);
     blockForm.reset();
     
 })
 
-const updateUserSettings = async (params) => {
+// blockForm.addEventListener("keydown", (event) => {
+    
+//     if(event.key === 'Enter'){
+//         event.preventDefault();
+//     if(blockForm.website.value === "" || blockForm.recruiter.value === ""){
+//         return;
+//     }
+//     blocked[blockForm.website.value] = blockForm.recruiter.value; 
+//     updateUserSettingsAddition(blocked);
+//     blockForm.reset();
+// }
+    
+// })
 
+const updateUserSettingsAddition = async (params) => {
+    // check if already in
     let userSettings = await getUserSettings();
     let arr = []
     
@@ -46,10 +67,27 @@ const updateUserSettings = async (params) => {
     setUserSettings(key,arr)
 }
 
+const updateUserSettingsRemoval = async (key, value) => {
+    // check if not in
+
+    let userSettings = await getUserSettings();
+    let arr = []
+
+    if(key in userSettings && userSettings[key].includes(value)){
+        arr = userSettings[key];
+        arr = arr.filter(item => item !== value);
+        if(arr.length === 0){
+            chrome.storage.sync.remove(key, () => {alert("removed")})
+        }
+    }
+    setUserSettings(key,arr);
+    //alert(JSON.stringify(await getUserSettings()));
+    
+}
+
 const getUserSettings = async () => {
     let res;
      await chrome.storage.sync.get().then((result) => {
-        //alert("Value is " + JSON.stringify(result));
         res = result;
     });
     return res;
@@ -57,7 +95,6 @@ const getUserSettings = async () => {
 
 const setUserSettings = async (key, arr) => {
     chrome.storage.sync.set({[key] : arr}).then( async () => {
-        // get user settings
         renderList()
         
       });
@@ -70,10 +107,18 @@ const renderList = async () => {
         Object.keys(updatedUserSettings).forEach( (key) => {
             updatedUserSettings[key].forEach((val) => {
                 const listItem = document.createElement("li");
+                const unblockButton = document.createElement("button");
+                unblockButton.textContent = "\u2715"
+                unblockButton.classList.add("unblock-button");
                 listItem.textContent = `${val} @ ${key}`;
+                listItem.append(unblockButton);
                 unorderedList.append(listItem);
-            })
-            
+                unblockButton.addEventListener('click', () => {
+                    updateUserSettingsRemoval(key,val)
+                });
+            }) 
         })
 }
+
+
 

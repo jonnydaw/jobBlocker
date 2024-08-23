@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Job Blocker",
+    "name": "Beggars Can Be Choosers",
     "version": "1.0",
     "description": "Block jobs advertised from recruiters/ companies you don't want to see.",
     "permissions": [
@@ -16,7 +16,7 @@
       {
         "js": ["scripts/content.js"],
         "type": "module",
-        "matches": ["https://www.reed.co.uk/*"]
+        "matches": ["https://www.reed.co.uk/*","https://www.linkedin.com/jobs*"]
       }
     ]
   }

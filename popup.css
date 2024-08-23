@@ -10,16 +10,17 @@ body {
   }
 
 input[type=text] {
-  border: none;
+    border: 0.1em solid black;
     width: 100%;
     padding: 0.75em 1.25em;
     margin: 0.5em 0;
     display: inline-block;
-    border-radius: 0.25em;
+    border-radius: 0.5em;
     box-sizing: border-box;
   }
     
   #blockButton{
+    border: 0.1em solid black;
     display: block;
     margin: 0.75em auto;
     padding: 0.75em 1.25em;
@@ -31,14 +32,17 @@ input[type=text] {
   }
 
   h1, h2{
+    font-weight: lighter;
     text-align: center;
     text-transform: uppercase;
   }
+
   ul {
     list-style-type: none;
     padding-inline-start: 0;
     margin: 1rem 0;
     overflow-y: scroll;
+    scrollbar-width: thin;
     max-height: 12em;
   }
   
@@ -52,8 +56,9 @@ input[type=text] {
   }
  
   .unblock-button{
-    border: none;
+    border: 0.1em solid black;
     background-color: #FF6961;
+    border-radius: 0.25em;
     float: right;
     cursor: pointer;
   }

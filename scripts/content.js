@@ -16,6 +16,8 @@ const interval =  setInterval(async () =>{
     return;
   }
 
+  
+
   const newUrl = window.location.href;
   const newUserSettings = await getUserSettings();
 
@@ -30,6 +32,8 @@ const interval =  setInterval(async () =>{
       blockReedJobs(userSettings["reed.co.uk"]);
     } else if (userSettings["linkedin.com"] && currentUrl.includes("linkedin.com")) {
       blockLinkedinJobs(userSettings["linkedin.com"]);
+    }  else if (userSettings["uk.indeed.com"] && currentUrl.includes("uk.indeed.com")) {
+      blockIndeedJobs(userSettings["uk.indeed.com"]);
     }
   }
 }, 1500);
@@ -58,6 +62,20 @@ const blockLinkedinJobs = (recruiters) => {
           parent.style.display = "block"
         }
     })
+}
+
+const blockIndeedJobs = (recruiters) => {
+  const jobCards = document.querySelectorAll("[data-testid='company-name']");
+  console.log(jobCards)
+  jobCards.forEach((job) => {
+    const parent = job.closest("li");
+    console.log(job.textContent.trim())
+      if(recruiters.includes(job.textContent.trim())){
+        parent.style.display = 'none'; 
+      } else if(parent?.style.display == "none"){
+        parent.style.display = "block"
+      }
+  })
 }
 
 

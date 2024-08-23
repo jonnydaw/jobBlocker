@@ -16,7 +16,9 @@
       {
         "js": ["scripts/content.js"],
         "type": "module",
-        "matches": ["https://www.reed.co.uk/*","https://www.linkedin.com/jobs*"]
+        "matches": ["https://www.reed.co.uk/*",
+          "https://www.linkedin.com/jobs*",
+          "https://uk.indeed.com/*"]
       }
     ]
   }

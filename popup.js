@@ -1,7 +1,7 @@
 
 const blocked = {};
 const blockForm =  document.querySelector("#blockForm");
-const validWebsites = ["reed.co.uk", "linkedin.com"]
+const validWebsites = ["reed.co.uk", "linkedin.com","uk.indeed.com"]
 
 // chrome.storage.local.clear(function() {
 //     var error = chrome.runtime.lastError;

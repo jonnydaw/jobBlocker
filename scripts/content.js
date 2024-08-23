@@ -15,16 +15,21 @@ const interval =  setInterval(async () =>{
     clearInterval(interval);
     return;
   }
-  if(currentUrl !== window.location.href || userSettings !== await getUserSettings()){
 
-    currentUrl = window.location.href;
-    userSettings = await getUserSettings();
+  const newUrl = window.location.href;
+  const newUserSettings = await getUserSettings();
 
-    if (userSettings["reed.co.uk"] && currentUrl.includes("reed.co.uk")){
-        blockReedJobs(userSettings["reed.co.uk"])
-    } 
-    else if (userSettings["linkedin.com"] && currentUrl.includes("linkedin.com")){
-      blockLinkedinJobs(userSettings["linkedin.com"])
+  const urlChangeFlag = currentUrl !== newUrl;
+  const settingsChangeFlag = JSON.stringify(userSettings) !== JSON.stringify(newUserSettings);
+
+  if (urlChangeFlag || settingsChangeFlag) {
+    currentUrl = newUrl;
+    userSettings = JSON.parse(JSON.stringify(newUserSettings));
+
+    if (userSettings["reed.co.uk"] && currentUrl.includes("reed.co.uk")) {
+      blockReedJobs(userSettings["reed.co.uk"]);
+    } else if (userSettings["linkedin.com"] && currentUrl.includes("linkedin.com")) {
+      blockLinkedinJobs(userSettings["linkedin.com"]);
     }
   }
 }, 1500);

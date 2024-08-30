@@ -18,7 +18,9 @@
         "type": "module",
         "matches": ["https://www.reed.co.uk/*",
           "https://www.linkedin.com/jobs*",
-          "https://uk.indeed.com/*"]
+          "https://uk.indeed.com/*",
+          "https://targetjobs.co.uk/*"
+        ]
       }
     ]
   }

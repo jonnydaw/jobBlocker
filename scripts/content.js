@@ -47,6 +47,12 @@ const interval =  setInterval(async () =>{
         "[data-testid='company-name']", 
         "li" 
       )
+    }  else if (userSettings["targetjobs.co.uk"] && currentUrl.includes("targetjobs.co.uk")) {
+      console.log("hi")
+      blockTargetJobs(
+        userSettings["targetjobs.co.uk"],
+       
+      )
     }
   }
 }, 1500);
@@ -61,6 +67,20 @@ const blockJobsStandardFormat = (recruiters, jobCardELement, jobCardParent) => {
           parent.style.display = "block"
         }
       }) 
+}
+
+const blockTargetJobs = (recruiters) => {
+  const jobCards  = document.querySelectorAll('[data-cy="card:view-opportunity"]')
+  jobCards.forEach((job) => {
+    const ariaString = job.ariaLabel
+    const employer = ariaString.split("-").pop().trim();
+    const parent = job.closest("a");
+    if(recruiters.includes(employer)){
+      parent.style.display = 'none'; 
+    } else if(parent?.style.display == "none"){
+      parent.style.display = "block"
+    }
+  }) 
 }
 
 

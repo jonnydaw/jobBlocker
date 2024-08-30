@@ -29,53 +29,39 @@ const interval =  setInterval(async () =>{
     userSettings = JSON.parse(JSON.stringify(newUserSettings));
 
     if (userSettings["reed.co.uk"] && currentUrl.includes("reed.co.uk")) {
-      blockReedJobs(userSettings["reed.co.uk"]);
+      blockJobsStandardFormat(
+        userSettings["reed.co.uk"],
+        "[data-element='recruiter']", 
+        "article" 
+      )
+
     } else if (userSettings["linkedin.com"] && currentUrl.includes("linkedin.com")) {
-      blockLinkedinJobs(userSettings["linkedin.com"]);
+      blockJobsStandardFormat(
+        userSettings["linkedin.com"],
+        ".job-card-container__primary-description", 
+        "li" 
+      )
     }  else if (userSettings["uk.indeed.com"] && currentUrl.includes("uk.indeed.com")) {
-      blockIndeedJobs(userSettings["uk.indeed.com"]);
+      blockJobsStandardFormat(
+        userSettings["uk.indeed.com"],
+        "[data-testid='company-name']", 
+        "li" 
+      )
     }
   }
 }, 1500);
 
-
-const blockReedJobs = (recruiters)  =>{ 
-  const jobCards  = document.querySelectorAll("[data-element='recruiter']")
-      jobCards.forEach((job) =>{
-        const parent = job.closest("article");
+const blockJobsStandardFormat = (recruiters, jobCardELement, jobCardParent) => {
+  const jobCards  = document.querySelectorAll(jobCardELement)
+      jobCards.forEach((job) => {
+        const parent = job.closest(jobCardParent);
         if(recruiters.includes(job.textContent.trim())){
           parent.style.display = 'none'; 
         } else if(parent?.style.display == "none"){
           parent.style.display = "block"
         }
       }) 
-  }
-
-const blockLinkedinJobs = (recruiters) => {
-    const jobCards = document.querySelectorAll(".job-card-container__primary-description");
-    jobCards.forEach((job) => {
-      const parent = job.closest("li");
-      console.log(job.textContent.trim())
-        if(recruiters.includes(job.textContent.trim())){
-          parent.style.display = 'none'; 
-        } else if(parent?.style.display == "none"){
-          parent.style.display = "block"
-        }
-    })
 }
 
-const blockIndeedJobs = (recruiters) => {
-  const jobCards = document.querySelectorAll("[data-testid='company-name']");
-  console.log(jobCards)
-  jobCards.forEach((job) => {
-    const parent = job.closest("li");
-    console.log(job.textContent.trim())
-      if(recruiters.includes(job.textContent.trim())){
-        parent.style.display = 'none'; 
-      } else if(parent?.style.display == "none"){
-        parent.style.display = "block"
-      }
-  })
-}
 
 
